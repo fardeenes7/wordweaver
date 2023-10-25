@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Wordweaver</title>
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Playfair+Display&family=Poppins&display=swap"
+            rel="stylesheet"
+        />
+        <!--Tailwnd CSSS-->
+        <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            sans: ["Poppins", "sans-serif"],
+                            display: ["Playfair Display", "serif"],
+                        },
+                        colors: {
+                            clifford: "#da373d",
+                        },
+                    },
+                },
+            };
+        </script>
+        <!--Flowbite-->
+        <link
+            href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="w-full relative bg-gray-50">
+        {% load static %}
+        <script src="{% static 'ckeditor/ckeditor-init.js' %}"></script>
+        <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+        {% block blank %} {% endblock %}
+        <!---->
+        {% include 'auth/logout.html' %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.js"></script>
+        <script>
+            function toggleView(id) {
+                var x = document.getElementById(id);
+                x.classList.toggle("hidden");
+            }
+        </script>
+    </body>
+</html>

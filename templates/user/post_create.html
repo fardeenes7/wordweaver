@@ -1,0 +1,177 @@
+{% extends 'user/_user_base.html' %}{% block user %}
+
+<!---->
+<section class="">
+    <div class="flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-bold">Create New Post</h1>
+        </div>
+    </div>
+    <div></div>
+</section>
+<section class="mt-6 bg-white dark:bg-gray-900 border rounded">
+    <div class="py-8 px-4 mx-auto max-w-3xl lg:py-16">
+        <form action="#" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
+                <div class="sm:col-span-2">
+                    <label
+                        for="name"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Title</label
+                    >
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                        placeholder="Type Post Title"
+                        required=""
+                    />
+                </div>
+                <div class="sm:col-span-2">
+                    <label
+                        for="tags"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Tags</label
+                    >
+                    <input
+                        type="text"
+                        name="tags"
+                        id="tags"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                        placeholder="Seperate with comma"
+                        required=""
+                    />
+                </div>
+                <div class="w-full">
+                    <label
+                        for="image"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Featured Image</label
+                    >
+                    <input
+                        type="file"
+                        accept="image/*"
+                        name="image"
+                        id="image"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-600 focus:border-gray-600 block w-full px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                        placeholder="Upload Feaatued Image"
+                        required=""
+                    />
+                </div>
+
+                <div>
+                    <label
+                        for="category"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Category</label
+                    >
+                    <select
+                        id="category"
+                        name="category"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-500 focus:border-gray-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                    >
+                        <option selected="">Select category</option>
+                        {% for category in all_category_list %}
+                        <option value="{{category.id}}">
+                            {{category.name}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="sm:col-span-2">
+                    <label
+                        for="body"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                        >Body</label
+                    >
+                    <!-- <textarea
+                        id="description"
+                        rows="8"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-500 focus:border-gray-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-gray-500 dark:focus:border-gray-500"
+                        placeholder="Your description here"
+                    ></textarea> -->
+                    {{form.body}}
+                </div>
+                <fieldset class="grid grid-cols-2 gap-4">
+                    <legend class="sr-only">Publish</legend>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="publish"
+                            value="no"
+                            id="publish_no"
+                            class="peer hidden [&:checked_+_label_svg]:block"
+                            checked
+                        />
+
+                        <label
+                            for="publish_no"
+                            class="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
+                        >
+                            <div class="flex items-center justify-between">
+                                <p class="text-gray-700">Save as Draft</p>
+
+                                <svg
+                                    class="hidden h-5 w-5 text-blue-600"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div>
+                        <input
+                            type="radio"
+                            name="publish"
+                            value="yes"
+                            id="publish_yes"
+                            class="peer hidden [&:checked_+_label_svg]:block"
+                        />
+
+                        <label
+                            for="publish_yes"
+                            class="block cursor-pointer rounded-lg border border-gray-100 bg-white p-4 text-sm font-medium shadow-sm hover:border-gray-200 peer-checked:border-blue-500 peer-checked:ring-1 peer-checked:ring-blue-500"
+                        >
+                            <div class="flex items-center justify-between">
+                                <p class="text-gray-700">Publish</p>
+
+                                <svg
+                                    class="hidden h-5 w-5 text-blue-600"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </div>
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
+            <button
+                type="submit"
+                class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-900 hover:bg-gray-800"
+            >
+                Add product
+            </button>
+        </form>
+    </div>
+</section>
+<!---->
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'user/_user_base.html' %}{% block user %}
+<!---->
+<section class="">
+    <div class="flex justify-between items-end">
+        <div>
+            <h1 class="text-4xl font-bold">All Post</h1>
+            <p class="mt-2 text-gray-500">Create and Manage Posts</p>
+        </div>
+        <div class="flex flex-col justify-end items-end gap-4">
+            <a
+                href="{% url 'my_post_create' %}"
+                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
+            >
+                Create Post
+            </a>
+            <form action="">
+                <select
+                    class="text-sm inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md border ring-1 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+                    name="status"
+                    id=""
+                    onchange="this.form.submit()"
+                >
+                    <option value="">All</option>
+                    <option value="Draft">Draft</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Flagged">Flagged</option>
+                    <option value="Rejected">Rejected</option>
+                    <option value="Published">Published</option>
+                </select>
+            </form>
+        </div>
+    </div>
+    <div></div>
+</section>
+<section class="mt-6 flex flex-col gap-4">
+    {% for post in posts %}
+    <a href="{% url 'my_post_edit' post.slug %}">
+        <article
+            class="flex bg-white transition hover:shadow-xl rounded-lg border overflow-hidden"
+        >
+            <div class="hidden sm:block sm:basis-56">
+                <img
+                    alt="Guitar"
+                    src="/media/{{post.image}}"
+                    class="aspect-square h-full w-full object-cover"
+                />
+            </div>
+
+            <div class="flex flex-1 flex-col justify-between">
+                <div
+                    class="border-s border-gray-900/10 p-4 sm:border-l-transparent sm:p-6"
+                >
+                    <h3
+                        class="font-bold uppercase text-gray-900 flex items-center"
+                    >
+                        {{post.title}}
+                        <span
+                            class="ml-3 capitalize {% if post.status == 'Draft' %}bg-yellow-100 text-yellow-800{% elif post.status == 'Published' %}bg-green-100 text-green-700{% else %}bg-red-100 text-red-700{% endif %} text-xs px-3 py-1 rounded border font-bold"
+                            >{{post.status}}</span
+                        >
+                    </h3>
+
+                    <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-700">
+                        {{post.excerpt}}
+                    </p>
+                    <button
+                        class="mt-4 inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
+                    >
+                        Edit Post
+                    </button>
+                </div>
+            </div>
+        </article>
+    </a>
+    {% endfor %}
+</section>
+<!---->
+{% endblock %}

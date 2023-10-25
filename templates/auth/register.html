@@ -1,0 +1,275 @@
+{% extends '_blank_base.html' %}{% block blank %}
+<!--
+  Heads up! 👋
+
+  Plugins:
+    - @tailwindcss/forms
+-->
+
+<section class="relative flex flex-wrap lg:h-screen lg:items-center">
+    <a
+        href="{% url 'index' %}"
+        class="absolute top-8 left-16 font-bold text-3xl font-display"
+        >Wordweaver</a
+    >
+    <div
+        class="w-full mt-16 sm:mt-0 px-4 py-12 sm:px-6 sm:py-16 lg:w-1/2 lg:px-8 lg:py-24"
+    >
+        <div class="mx-auto max-w-lg text-center">
+            <h1 class="text-2xl font-bold sm:text-3xl">Get started today!</h1>
+
+            <p class="mt-4 text-gray-500">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Et
+                libero nulla eaque error neque ipsa culpa autem, at itaque
+                nostrum!
+            </p>
+        </div>
+
+        <form
+            action=""
+            method="POST"
+            class="mx-auto mb-0 mt-8 max-w-xl grid grid-cols-1 md:grid-cols-2 gap-4"
+        >
+            {% csrf_token %}
+            <div>
+                <label for="first_name" class="sr-only">First Name</label>
+
+                <div class="relative">
+                    <input
+                        type="text"
+                        name="first_name"
+                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                        placeholder="First Name"
+                        value="{{ request.POST.first_name }}"
+                        required
+                    />
+
+                    <span
+                        class="absolute inset-y-0 end-0 grid place-content-center px-4"
+                    >
+                        <svg
+                            class="register_svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            viewBox="0 0 448 512"
+                        >
+                            <style>
+                                .register_svg {
+                                    fill: #9ca3af;
+                                }
+                            </style>
+                            <path
+                                d="M254 52.8C249.3 40.3 237.3 32 224 32s-25.3 8.3-30 20.8L57.8 416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32h-1.8l18-48H303.8l18 48H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H390.2L254 52.8zM279.8 304H168.2L224 155.1 279.8 304z"
+                            />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <label for="last_name" class="sr-only">Last Name</label>
+
+                <div class="relative">
+                    <input
+                        type="text"
+                        name="last_name"
+                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                        placeholder="Last Name"
+                        value="{{ request.POST.last_name }}"
+                    />
+
+                    <span
+                        class="absolute inset-y-0 end-0 grid place-content-center px-4"
+                    >
+                        <svg
+                            class="register_svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            viewBox="0 0 448 512"
+                        >
+                            <path
+                                d="M254 52.8C249.3 40.3 237.3 32 224 32s-25.3 8.3-30 20.8L57.8 416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32h-1.8l18-48H303.8l18 48H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H390.2L254 52.8zM279.8 304H168.2L224 155.1 279.8 304z"
+                            />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="sr-only">Email</label>
+
+                <div class="relative">
+                    <input
+                        type="email"
+                        name="email"
+                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                        placeholder="Enter email"
+                        value="{{ request.POST.email }}"
+                    />
+
+                    <span
+                        class="absolute inset-y-0 end-0 grid place-content-center px-4"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
+                            />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <label for="email" class="sr-only">Username</label>
+
+                <div class="relative">
+                    <input
+                        type="text"
+                        pattern="[a-z0-9.]{4,}"
+                        title="Username must be at least 4 characters long and contain only lowercase letters, numbers, and periods."
+                        name="username"
+                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                        placeholder="Enter username"
+                        value="{{ request.POST.username }}"
+                    />
+
+                    <span
+                        class="absolute inset-y-0 end-0 grid place-content-center px-4"
+                    >
+                        <svg
+                            class="register_svg"
+                            xmlns="http://www.w3.org/2000/svg"
+                            height="1em"
+                            viewBox="0 0 448 512"
+                        >
+                            <path
+                                d="M254 52.8C249.3 40.3 237.3 32 224 32s-25.3 8.3-30 20.8L57.8 416H32c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32h-1.8l18-48H303.8l18 48H320c-17.7 0-32 14.3-32 32s14.3 32 32 32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H390.2L254 52.8zM279.8 304H168.2L224 155.1 279.8 304z"
+                            />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="sr-only">Password</label>
+
+                <div class="relative">
+                    <input
+                        type="password"
+                        name="password1"
+                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                        placeholder="Enter password"
+                    />
+
+                    <span
+                        class="absolute inset-y-0 end-0 grid place-content-center px-4"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            <div>
+                <label for="password" class="sr-only">Password</label>
+
+                <div class="relative">
+                    <input
+                        type="password"
+                        name="password2"
+                        class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                        placeholder="Enter password again"
+                    />
+
+                    <span
+                        class="absolute inset-y-0 end-0 grid place-content-center px-4"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="h-4 w-4 text-gray-400"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                            />
+                        </svg>
+                    </span>
+                </div>
+            </div>
+            {% if form.errors %}
+            <div
+                class="md:col-span-2 flex flex-col items-start justify-start gap-2 text-xs text-red-500"
+            >
+                {% for field_name, errors in form.errors.items %}
+                <p class="error capitalize">
+                    <span class="font-bold">{{ field_name }}:</span>
+                    {% for error in errors %} {{ error }} {% endfor %}
+                </p>
+                {% endfor %}
+            </div>
+            {% endif %}
+            <div class="md:col-span-2 flex items-center justify-between">
+                <p class="text-sm text-gray-500">
+                    Have an account?
+                    <a
+                        class="underline hover:font-bold"
+                        href="{% url 'login' %}"
+                        >Sign In</a
+                    >
+                </p>
+
+                <button
+                    type="submit"
+                    class="inline-block rounded-lg bg-blue-500 px-5 py-3 text-sm font-medium text-white"
+                >
+                    Sign in
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="relative h-64 w-full sm:h-96 lg:h-full lg:w-1/2">
+        <img
+            alt="Welcome"
+            src="https://images.unsplash.com/photo-1517971071642-34a2d3ecc9cd?auto=format&fit=crop&q=80&w=1976&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            class="absolute inset-0 h-full w-full object-cover"
+        />
+    </div>
+</section>
+{% endblock %}

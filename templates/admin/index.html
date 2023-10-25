@@ -1,0 +1,60 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}">{% endblock %}
+
+
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block index %}
+<div class=" grid grid-cols-6 gap-8 mx-4 md:mx-8 lg:mx-16">
+    <div>
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+    </div>
+    <div class="col-span-5">
+        <div class="mb-8 content-related grid grid-cols-4 gap-4">
+            <a
+            href="/admin/blog/post/?status__exact=Pending"
+            class="flex items-end justify-between rounded-lg border border-gray-100 bg-white p-6 shadow"
+            >
+                <div>
+                    <p class="text-sm text-gray-500">Pending Posts</p>
+
+                    <p class="text-2xl font-medium text-gray-900">{{pending_posts}}</p>
+                </div>
+
+                
+            </a>
+
+            <a
+                href="/admin/blog/post/?status__exact=Flagged"
+                class="flex items-end justify-between rounded-lg border border-gray-100 bg-white p-6 shadow"
+            >
+                <div>
+                    <p class="text-sm text-gray-500">Flagged Posts</p>
+
+                    <p class="text-2xl font-medium text-gray-900">{{flagged_posts}}</p>
+                </div> 
+            </a>
+            <a
+                href="/admin/blog/post/?status__exact=Published"
+                class="flex items-end justify-between rounded-lg border border-gray-100 bg-white p-6 shadow"
+            >
+                <div>
+                    <p class="text-sm text-gray-500">Published Posts</p>
+
+                    <p class="text-2xl font-medium text-gray-900">{{published_posts}}</p>
+                </div> 
+            </a>
+            
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

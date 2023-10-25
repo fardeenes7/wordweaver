@@ -1,0 +1,15 @@
+{% extends '_base.html' %}{% block base %}
+<!---->
+<!---->
+<div
+    class="mt-6 w-full max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-4 lg:grid-cols-5 gap-6 lg:gap-8 px-6 lg:px-8"
+>
+    <div>{% include 'user/_nav.html' %}</div>
+    <!---->
+    <div class="sm:col-span-3 lg:col-span-4 p-4">
+        {% block user %} {% endblock %}
+    </div>
+</div>
+<!---->
+<!---->
+{% endblock %}
