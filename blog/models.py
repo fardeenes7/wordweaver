@@ -38,6 +38,15 @@ class Category(models.Model):
             self.slug = slug
         super(Category, self).save(*args, **kwargs)
 
+    def get_post_count(self):
+        return self.post.count()
+    
+    def get_published_post_count(self):
+        return self.post.filter(status='Published').count()
+    
+    class Meta:
+        verbose_name_plural = 'Categories'
+
     
 
 class Tag(models.Model):
@@ -64,7 +73,7 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True, blank=True)
     excerpt = models.CharField(max_length=200, blank=True)
-    category = models.ForeignKey(Category, blank=True, null=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey(Category, related_name='post', blank=True, null=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField(Tag, blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Draft')
     admin_comment = models.TextField(blank=True, null=True)
@@ -89,6 +98,9 @@ class Post(models.Model):
         self.updated_at = timezone.now()
         super(Post, self).save(*args, **kwargs)
 
+    def view_count(self):
+        return self.view.all().count()
+
     def flag_check(self):
         word_list = ['offensive']
         flagged = []
@@ -103,17 +115,26 @@ class Post(models.Model):
         return 'Anonymous'
 
 class PostView(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    date = models.DateField(auto_now_add=True)
+    post = models.ForeignKey(Post, related_name='view', on_delete=models.CASCADE)
+    date = models.DateField(auto_now_add=True, null=True, blank=True)
     def __str__(self):
         return self.post.title + '@' + str(self.date)
     
 
 class Comment(models.Model):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, related_name='comment', on_delete=models.CASCADE)
     user = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     body = models.TextField()
-    date = models.DateField(auto_now_add=True)
+    created_at = models.DateField(auto_now_add=True, null=True, blank=True)
+    
     def __str__(self):
         return self.post.title + '@' + str(self.date)
     
+
+class Bookmark(models.Model):
+    post = models.ForeignKey(Post, related_name='bookmark', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='bookmark', null=True, blank=True, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return f'{self.user.username} @ {self.post.title}'

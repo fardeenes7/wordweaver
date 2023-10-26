@@ -17,10 +17,9 @@ class Profile(models.Model):
         return f'{self.user.first_name} {self.user.last_name}'
     
     def save(self, *args, **kwargs):
-        super(Profile, self).save(*args, **kwargs)
         if not self.image:
             self.image = 'profile/default.png'
-            super(Profile, self).save(*args, **kwargs)
+        super(Profile, self).save(*args, **kwargs)
 
 
 class Follow(models.Model):

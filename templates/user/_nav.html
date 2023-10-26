@@ -56,7 +56,7 @@
         <span class="truncate"> My Posts </span>
     </a>
     <a
-        href="#"
+        href="{% url 'my_bookmarks' %}"
         class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 group flex items-center px-3 py-2 rounded-md"
     >
         <!-- Heroicon name: outline/calendar -->
@@ -100,11 +100,10 @@
         <span class="truncate"> Following </span>
     </a>
 
-    <a
+    <!-- <a
         href="#"
         class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 group flex items-center px-3 py-2 rounded-md"
     >
-        <!-- Heroicon name: outline/calendar -->
         <svg
             class="text-gray-400 group-hover:text-gray-500 flex-shrink-0 -ml-1 mr-3 h-4 w-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -121,10 +120,10 @@
             />
         </svg>
         <span class="truncate"> Activity </span>
-    </a>
+    </a> -->
 
     <a
-        href="#"
+        href="{% url 'my_settings' %}"
         class="text-gray-600 hover:bg-gray-100 hover:text-gray-900 group flex items-center px-3 py-2 rounded-md"
     >
         <!-- Heroicon name: outline/chart-bar -->

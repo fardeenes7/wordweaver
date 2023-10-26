@@ -17,15 +17,15 @@
                 <select
                     class="text-sm inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md border ring-1 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
                     name="status"
-                    id=""
+                    id="status"
                     onchange="this.form.submit()"
                 >
                     <option value="">All</option>
-                    <option value="Draft">Draft</option>
-                    <option value="Pending">Pending</option>
-                    <option value="Flagged">Flagged</option>
-                    <option value="Rejected">Rejected</option>
-                    <option value="Published">Published</option>
+                    <option value="Draft" {% if request.GET.status == 'Draft' %}selected{% endif %}>Draft</option>
+                    <option value="Pending" {% if request.GET.status == 'Pending' %}selected{% endif %}>Pending</option>
+                    <option value="Flagged" {% if request.GET.status == 'Flagged' %}selected{% endif %}>Flagged</option>
+                    <option value="Rejected" {% if request.GET.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                    <option value="Published" {% if request.GET.status == 'Published' %}selected{% endif %}>Published</option>
                 </select>
             </form>
         </div>
@@ -33,6 +33,9 @@
     <div></div>
 </section>
 <section class="mt-6 flex flex-col gap-4">
+    {% if posts|length == 0 %}
+    <p class="text-sm">No {{request.GET.status}} post found.</p>
+    {% endif %}
     {% for post in posts %}
     <a href="{% url 'my_post_edit' post.slug %}">
         <article

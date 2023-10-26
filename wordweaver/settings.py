@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,6 +74,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'app.context_processors.all_category_list',
                 'app.context_processors.admin_stats',
+                'app.context_processors.blog_data',
             ],
         },
     },
@@ -110,6 +113,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'bg-red-200 border border-red-500',
+    messages.SUCCESS: 'bg-green-200 border border-green-500',
+    messages.INFO: 'bg-yellow-200 border border-yellow-500',
+    messages.WARNING: 'bg-yellow-200 border border-yellow-500',
+}
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -139,6 +150,6 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_REDIRECT_URL = 'user'
+LOGIN_REDIRECT_URL = 'my_profile'
 LOGOUT_REDIRECT_URL = 'index'
 

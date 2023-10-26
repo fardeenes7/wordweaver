@@ -1,0 +1,25 @@
+<a
+    href=""
+    class="max-w-xs hover:bg-white p-4 flex flex-col h-full rounded-xl transition hover:shadow-lg"
+>
+    <img
+        src="/media/{{ post.image }}"
+        class="mb-5 rounded-lg h-48 content-center object-cover"
+        alt="Featured Image"
+    />
+    <h2
+        class="mb-2 text-lg font-bold leading-tight text-gray-700 dark:text-white"
+    >
+        <p>{{post.title}}</p>
+    </h2>
+    <p
+        class="mb-4 text-gray-500 dark:text-gray-400 line-clamp-3 text-sm/relaxed"
+    >
+        {{post.excerpt}}
+    </p>
+    <p
+        class="mt-auto text-sm inline-flex items-center font-medium text-primary-600 dark:text-primary-500 hover:no-underline"
+    >
+        {{ post.created_at|date:'d M, Y' }}
+    </p>
+</a>

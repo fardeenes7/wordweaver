@@ -1,0 +1,21 @@
+<section class="sticky top-20 flex flex-col gap-2" id="trending">
+    <span class="text-lg font-bold">Trending Posts</span>
+    {% for post in trending_post_list %}
+    <a
+        href="{% url 'post_detail' post.slug %}"
+        class="flex gap-3 rounded-lg overflow-hidden bg-white hover:shadow-lg border"
+    >
+        <img
+            class="w-20 h-20 aspect-square object-center object-cover"
+            src="/media/{{post.image}}"
+            alt=""
+        />
+        <div class="p-2 flex flex-col gap-2">
+            <h3 class="text-sm font-bold line-clamp-2">{{post.title}}</h3>
+            <span class="mt-auto text-xs text-gray-600"
+                >{{post.created_at|date:'d M, Y'}}</span
+            >
+        </div>
+    </a>
+    {% endfor %}
+</section>

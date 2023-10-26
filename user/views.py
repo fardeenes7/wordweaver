@@ -2,16 +2,17 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from blog.forms import PostForm
 from blog.models import Post, Category, Tag
+from django.contrib import messages
 
 def profile(request):
     context = {
-        
+        'profile': User.objects.get(username=request.user.username).profile
     }
-    return render(request, 'user/profile.html', context)
+    return render(request, 'user/profile/profile.html', context)
 
 
 def profile_edit(request):
-    return render(request, 'user/profile_edit.html')
+    return render(request, 'user/profile/edit.html')
 
 
 def following(request):
@@ -28,10 +29,13 @@ def followers(request):
 
 
 def post_list(request):
+    post_list = Post.objects.filter(author=request.user).order_by('-created_at')
+    if request.GET.get('status'):
+        post_list = post_list.filter(status=request.GET.get('status'))
     context = {
-        'posts': Post.objects.filter(author=request.user)
+        'posts': post_list
     }
-    return render(request, 'user/post_list.html', context)
+    return render(request, 'user/post/list.html', context)
 
 
 def post_create(request):
@@ -47,12 +51,12 @@ def post_create(request):
         )
         tag_list =request.POST.get('tags').split(',')
         for tag in tag_list:
-            post.tags.add(Tag.objects.get_or_create(name=tag)[0])
+            post.tags.add(Tag.objects.get_or_create(name=tag.strip())[0])
         return redirect('my_post_edit', slug=post.slug)
     context = {
         'form': form
     }
-    return render(request, 'user/post_create.html', context)
+    return render(request, 'user/post/create.html', context)
 
 
 def post_edit(request, slug):
@@ -67,7 +71,7 @@ def post_edit(request, slug):
         post.save()
         tag_list =request.POST.get('tags').split(',')
         for tag in tag_list:
-            post.tags.add(Tag.objects.get_or_create(name=tag)[0])
+            post.tags.add(Tag.objects.get_or_create(name=tag.strip())[0])
         post.save()
         return redirect('my_post_edit', slug=post.slug)
     context = {
@@ -75,15 +79,28 @@ def post_edit(request, slug):
         'tag_string': ', '.join([tag.name for tag in post.tags.all()]),
         'form': PostForm(instance=post)
     }
-    return render(request, 'user/post_edit.html', context)
+    return render(request, 'user/post/edit.html', context)
 
 
 def post_delete(request, slug):
-    return render(request, 'user/post_delete.html')
+    try:
+        post = Post.objects.get(slug=slug)
+        if post.author != request.user:
+            raise Exception('You are not allowed to delete this post')
+        post.delete()
+        messages.success(request, 'Post deleted successfully')
+        return redirect('my_post_list')
+    except Exception as e:
+        messages.error(request, str(e))
+        return redirect('my_post_edit', slug=slug)
+    return render(request, 'user/post/delete.html')
 
 
 def bookmarks(request):
-    return render(request, 'user/bookmarks.html')
+    context = {
+        'posts': Post.objects.filter(bookmark__user=request.user).order_by('-bookmark__created_at')
+    }
+    return render(request, 'user/bookmarks.html', context)
 
 
 def settings(request):

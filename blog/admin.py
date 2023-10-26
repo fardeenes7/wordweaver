@@ -4,13 +4,21 @@ from .models import *
 # Register your models here.
 
 
+class BookmarkInline(admin.TabularInline):
+    model = Bookmark
+
+
 class PostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'author', 'category', 'status', 'created_at', 'updated_at']
+    list_display = ['title', 'author', 'view_count', 'category', 'status', 'created_at', 'updated_at']
     list_filter = ['author', 'category', 'tags', 'status']
     search_fields = ['title', 'body']
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'created_at'
     ordering = ['-created_at']
+    inlines = [BookmarkInline]
+
+    def view_count(self, obj):
+        return obj.view.all().count()
 
 
 class CategoryAdmin(admin.ModelAdmin):

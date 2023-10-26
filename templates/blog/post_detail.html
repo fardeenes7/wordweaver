@@ -1,0 +1,57 @@
+{% extends '_base.html' %}{% block base %}
+<!---->
+
+<main
+    class="pt-4 pb-16 lg:pt-8 lg:pb-24 bg-gray-50 dark:bg-gray-900 antialiased"
+>
+    <div class="w-full max-w-5xl mx-auto px-4 grid grid-cols-3 gap-x-8 gap-y-4">
+        <div class="col-span-3">
+            {% include 'blog/detail/breadcrumb.html' %}
+            <!---->
+            {% include 'blog/detail/header.html' %}
+        </div>
+        <!---->
+        <div class="col-span-2">
+            {% include 'blog/detail/address.html' %}
+
+            <div class="sm:col-span-2 h-64 rounded-lg overflow-hidden">
+                <img
+                    class="object-cover w-full h-64 object-center"
+                    src="/media/{{post.image}}"
+                    alt=""
+                />
+            </div>
+            <article class="prose text-justify mt-6">
+                {{ post.body|safe }}
+            </article>
+        </div>
+        <div>{% include 'blog/trending.html' %}</div>
+        <!--Comment Section-->
+    </div>
+</main>
+<div class="py-8 lg:py-12 bg-white">
+    <div class="max-w-5xl mx-auto col-span-2">
+        {% include 'blog/detail/comments.html' %}
+    </div>
+</div>
+
+<aside
+    aria-label="Related articles"
+    class="py-8 lg:py-24 bg-gray-50 dark:bg-gray-800"
+>
+    <div class="px-4 mx-auto max-w-screen-xl">
+        <h2 class="mb-8 text-2xl font-bold text-gray-900 dark:text-white">
+            Related articles
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4">
+            {% for post in related_posts %}
+            <!---->
+            {% include 'blog/related_card.html' %}
+            <!---->
+            {% endfor %}
+        </div>
+    </div>
+</aside>
+
+<!---->
+{% endblock %}
