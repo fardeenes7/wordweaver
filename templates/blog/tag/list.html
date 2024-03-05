@@ -1,0 +1,15 @@
+{% extends '_base.html' %}{% block base %}
+<!---->
+<div
+    class="my-8 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap gap-4"
+>
+    {% for tag in tags %}
+    <a
+        href="{% url 'tag_detail' tag.tag.slug %}"
+        class="bg-{{tag.color}}-300 px-4 py-2 text-sm font-bold capitalize rounded-xl"
+        >{{tag.tag.name}} ({{tag.tag.post.all.count}})</a
+    >
+    {% endfor %}
+</div>
+<!---->
+{% endblock %}

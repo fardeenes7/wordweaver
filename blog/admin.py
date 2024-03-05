@@ -7,6 +7,10 @@ from .models import *
 class BookmarkInline(admin.TabularInline):
     model = Bookmark
 
+class CommentInline(admin.TabularInline):
+    model = Comment
+    extra = 0
+
 
 class PostAdmin(admin.ModelAdmin):
     list_display = ['title', 'author', 'view_count', 'category', 'status', 'created_at', 'updated_at']
@@ -14,8 +18,8 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['title', 'body']
     prepopulated_fields = {'slug': ('title',)}
     date_hierarchy = 'created_at'
-    ordering = ['-created_at']
-    inlines = [BookmarkInline]
+    ordering = ['-created_at',]
+    inlines = [CommentInline, BookmarkInline]
 
     def view_count(self, obj):
         return obj.view.all().count()
@@ -27,7 +31,7 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
     def total_post(self, obj):
-        return obj.post_set.count()
+        return obj.post.all().count()
 
 
 class TagAdmin(admin.ModelAdmin):

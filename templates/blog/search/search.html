@@ -1,0 +1,23 @@
+{% extends '_base.html' %}{% block base %}
+<!---->
+<section
+    class="w-full max-w-7xl mx-auto px-4 lg:px-8 py-12 flex justify-between items-center px-4 sm:px-6 lg:px-8"
+>
+    <div class="text-lg font-bold">
+        Showing search results for: {{request.GET.q}}
+    </div>
+</section>
+<section class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {% if posts|length == 0 %} No article found for your query. {% endif %}
+    <div class="mb-8 grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {% for post in posts %}
+        <!---->
+        {% if post.status == 'Published' %}
+        <!---->
+        {% include 'blog/card.html' %}
+        <!---->
+        {% endif %} {% endfor %}
+    </div>
+</section>
+<!---->
+{% endblock %}

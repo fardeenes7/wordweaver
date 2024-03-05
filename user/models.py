@@ -1,6 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+class Subscriber(models.Model):
+    email = models.EmailField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
+    def __str__(self):
+        return self.email
+    
+    class Meta:
+        ordering = ['-created']
+
+
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, related_name='profile', on_delete=models.CASCADE)
@@ -13,6 +24,7 @@ class Profile(models.Model):
     linkedin = models.CharField(max_length=100, blank=True, null=True)
     youtube = models.CharField(max_length=100, blank=True, null=True)
     website = models.CharField(max_length=100, blank=True, null=True)
+    new_post_email = models.BooleanField(default=True)
     def __str__(self):
         return f'{self.user.first_name} {self.user.last_name}'
     

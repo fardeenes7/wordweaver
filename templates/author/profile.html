@@ -1,4 +1,89 @@
 {% extends '_base.html' %}{% block base %}
 <!---->
+<div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 my-6">
+    <section aria-labelledby="author-overview-title">
+        <div class="rounded-lg bg-white overflow-hidden shadow">
+            <h2 class="sr-only" id="author-overview-title">Profile Overview</h2>
+            <div class="bg-white p-6">
+                <div class="sm:flex sm:items-center sm:justify-between">
+                    <div class="sm:flex sm:space-x-5 items-center">
+                        <div class="flex-shrink-0">
+                            <img
+                                class="mx-auto h-20 w-20 rounded-full"
+                                src="/media/{{author.image}}"
+                                alt=""
+                            />
+                        </div>
+                        <div
+                            class="mt-4 text-center sm:mt-0 sm:pt-1 sm:text-left"
+                        >
+                            <p
+                                class="text-xl font-bold text-gray-900 sm:text-2xl lg:text-3xl"
+                            >
+                                {{author}}
+                            </p>
+                            <p class="text-sm font-medium text-gray-600">
+                                {{author.user.email}}
+                            </p>
+                        </div>
+                    </div>
+                    {% if is_followed %}
+                    <div class="mt-5 flex justify-center sm:mt-0">
+                        <a
+                            href="{% url 'unfollow_author' user.username %}"
+                            class="flex justify-center font-bold items-center px-4 py-2 border border-gray-300 shadow-sm text-sm rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                        >
+                            Unfollow
+                        </a>
+                    </div>
+                    {% else %} {% if user.profile != author %}
+                    <div class="mt-5 flex justify-center sm:mt-0">
+                        <a
+                            href="{% url 'follow_author' user.username %}"
+                            class="flex justify-center font-bold items-center px-4 py-2 border border-gray-300 shadow-sm text-sm rounded-md text-gray-100 bg-gray-700 hover:bg-gray-600"
+                        >
+                            Follow
+                        </a>
+                    </div>
+                    {% endif %} {% endif %}
+                </div>
+            </div>
+            <div
+                class="border-t border-gray-200 bg-gray-50 grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-3 sm:divide-y-0 sm:divide-x"
+            >
+                <div class="px-6 py-5 text-sm font-medium text-center">
+                    <span class="text-gray-900"
+                        >{{author.user.post.all.count}}</span
+                    >
+                    <span class="text-gray-600">Posts</span>
+                </div>
+
+                <div class="px-6 py-5 text-sm font-medium text-center">
+                    <span class="text-gray-900"
+                        >{{author.user.follower.all.count}}</span
+                    >
+                    <span class="text-gray-600">Followers</span>
+                </div>
+
+                <div class="px-6 py-5 text-sm font-medium text-center">
+                    <span class="text-gray-900"
+                        >{{author.user.following.all.count}}</span
+                    >
+                    <span class="text-gray-600">Following</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="mt-8 mb-6 text-2xl font-bold">Articles by {{author}}</div>
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+        {% for post in posts %}
+        <!---->
+        {% if post.status == 'Published' %}
+        <!---->
+        {% include 'blog/card.html' %}
+        <!---->
+        {% endif %} {% endfor %}
+    </div>
+</div>
 <!---->
 {% endblock %}

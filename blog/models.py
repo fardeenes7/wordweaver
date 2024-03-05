@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 import re
+from app.emails import *
 
 def remove_html_tags(text):
     clean = re.compile('<.*?>')
@@ -39,7 +40,7 @@ class Category(models.Model):
         super(Category, self).save(*args, **kwargs)
 
     def get_post_count(self):
-        return self.post.count()
+        return self.post.all().count()
     
     def get_published_post_count(self):
         return self.post.filter(status='Published').count()
@@ -56,11 +57,13 @@ class Tag(models.Model):
         return self.name
     
     def save(self, *args, **kwargs):
-        if not self.slug:
-            slug = slugify(self.name)
-            if Tag.objects.filter(slug=slug).exists():
-                slug = slug + '-' + str(Tag.objects.filter(slug=slug).count())
-            self.slug = slug
+        if 3> len(self.name.split(' ')) > 0:
+            if not self.slug:
+                slug = slugify(self.name)
+                if Tag.objects.filter(slug=slug).exists():
+                    slug = slug + '-' + str(Tag.objects.filter(slug=slug).count())
+                self.slug = slug
+                self.name = self.name.strip()
         super(Tag, self).save(*args, **kwargs)
 
 
@@ -72,12 +75,13 @@ class Post(models.Model):
     body = RichTextUploadingField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True, blank=True)
-    excerpt = models.CharField(max_length=200, blank=True)
+    excerpt = models.CharField(max_length=210, blank=True)
     category = models.ForeignKey(Category, related_name='post', blank=True, null=True, on_delete=models.SET_NULL)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.ManyToManyField(Tag, related_name='post', blank=True)
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='Draft')
     admin_comment = models.TextField(blank=True, null=True)
     flag_comment = models.TextField(blank=True, null=True)
+    email_sent = models.BooleanField(default=False)
     def __str__(self):
         return self.title
     
@@ -96,6 +100,16 @@ class Post(models.Model):
             self.status = 'Pending'
             self.flag_comment = ''
         self.updated_at = timezone.now()
+
+        if self.email_sent == False:
+            if self.status == 'Published':
+                new_article_email(self)
+                email_publish_notification(self)
+                self.email_sent = True
+        if self.status == 'Flagged':
+            email_flagged_notification(self)
+        elif self.status == 'Rejected':
+            email_rejection_notification(self)
         super(Post, self).save(*args, **kwargs)
 
     def view_count(self):

@@ -25,7 +25,7 @@
                 {% if user.profile == profile %}
                 <div class="mt-5 flex justify-center sm:mt-0">
                     <a
-                        href="#"
+                        href="{% url 'my_profile_edit' %}"
                         class="flex justify-center items-center px-4 py-2 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
                     >
                         Edit Profile
@@ -47,9 +47,7 @@
             class="border-t border-gray-200 bg-gray-50 grid grid-cols-1 divide-y divide-gray-200 sm:grid-cols-3 sm:divide-y-0 sm:divide-x"
         >
             <div class="px-6 py-5 text-sm font-medium text-center">
-                <span class="text-gray-900"
-                    >{{profile.user.post.all.count}}</span
-                >
+                <span class="text-gray-900">{{post_count}}</span>
                 <span class="text-gray-600">Posts</span>
             </div>
 

@@ -3,7 +3,11 @@
         <h2 class="text-lg lg:text-2xl font-bold text-gray-900 dark:text-white">
             Comments ({{comments.all.count}})
         </h2>
+        <h2 class="text-lg lg:text-2xl font-bold text-gray-700 dark:text-white">
+            {{ post.view_count }} Views
+        </h2>
     </div>
+    {% if user.is_authenticated %}
     <form class="mb-6" method="POST">
         {% csrf_token %}
         <div
@@ -21,12 +25,14 @@
         </div>
         <button
             type="submit"
-            class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-900 hover:bg-gray-800"
+            class="inline-flex items-center py-2.5 px-4 text-xs font-bold text-center text-white bg-gray-700 rounded-lg focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-900 hover:bg-gray-800"
         >
             Post comment
         </button>
     </form>
-    {% for comment in comments %}
+    {% else %}
+    <p class="my-4">Please login to comment.</p>
+    {% endif %} {% for comment in comments %}
     <article
         class="p-6 mb-4 text-base bg-gray-50 border rounded-lg dark:bg-gray-900"
     >
@@ -50,6 +56,7 @@
                     >
                 </p>
             </div>
+            {% if comment.user == user %}
             <button
                 id="dropdownComment1Button"
                 data-dropdown-toggle="dropdownComment1"
@@ -80,20 +87,14 @@
                 >
                     <li>
                         <a
-                            href="#"
+                            href="{% url 'comment_delete' comment.id %}"
                             class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >Remove</a
-                        >
-                    </li>
-                    <li>
-                        <a
-                            href="#"
-                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                            >Report</a
+                            >Delete Comment</a
                         >
                     </li>
                 </ul>
             </div>
+            {% endif %}
         </footer>
         <p>{{comment.body}}</p>
     </article>

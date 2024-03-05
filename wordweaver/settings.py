@@ -153,3 +153,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'my_profile'
 LOGOUT_REDIRECT_URL = 'index'
 
+
+# Email Settings
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'wordweaver993@gmail.com'
+EMAIL_HOST_PASSWORD = 'omuryjvceoaiezfn'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'Word Weaver <wordweaver993@gmail.com>'
+# Email Settings End
+
+
+CELERY_EMAIL_TASK_CONFIG = {
+    'name': 'djcelery_email_send',
+    'ignore_result': True,
+    'queue': 'email',
+    'rate_limit': '30/m',
+}

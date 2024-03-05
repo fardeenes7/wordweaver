@@ -4,32 +4,46 @@
     <div class="flex justify-between items-end">
         <div>
             <h1 class="text-4xl font-bold">All Post</h1>
-            <p class="mt-2 text-gray-500">Create and Manage Posts</p>
         </div>
-        <div class="flex flex-col justify-end items-end gap-4">
-            <a
-                href="{% url 'my_post_create' %}"
-                class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
-            >
-                Create Post
-            </a>
-            <form action="">
-                <select
-                    class="text-sm inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md border ring-1 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
-                    name="status"
-                    id="status"
-                    onchange="this.form.submit()"
-                >
-                    <option value="">All</option>
-                    <option value="Draft" {% if request.GET.status == 'Draft' %}selected{% endif %}>Draft</option>
-                    <option value="Pending" {% if request.GET.status == 'Pending' %}selected{% endif %}>Pending</option>
-                    <option value="Flagged" {% if request.GET.status == 'Flagged' %}selected{% endif %}>Flagged</option>
-                    <option value="Rejected" {% if request.GET.status == 'Rejected' %}selected{% endif %}>Rejected</option>
-                    <option value="Published" {% if request.GET.status == 'Published' %}selected{% endif %}>Published</option>
-                </select>
-            </form>
-        </div>
+        <a
+            href="{% url 'my_post_create' %}"
+            class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-gray-600 hover:bg-gray-700"
+        >
+            Create Post
+        </a>
     </div>
+    <div class="mt-3 flex justify-between items-end gap-4">
+            
+            <p class="mt-2 text-gray-500">Create and Manage Posts</p>
+            <div>
+                <form action="" class="flex justify-end gap-4">
+                    <select
+                        class="text-sm inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md border ring-1 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+                        name="category"
+                        id="category"
+                        onchange="this.form.submit()"
+                    >
+                        <option value="">Filter by Category</option>
+                       {% for category in all_category_list %}
+                       <option value="{{category.slug}}" {% if request.GET.category == category.slug %}selected{% endif %}>{{category}}</option>
+                       {% endfor %}
+                    </select>
+                    <select
+                        class="text-sm inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md border ring-1 ring-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-600"
+                        name="status"
+                        id="status"
+                        onchange="this.form.submit()"
+                    >
+                        <option value="">Filter by Status</option>
+                        <option value="Draft" {% if request.GET.status == 'Draft' %}selected{% endif %}>Draft</option>
+                        <option value="Pending" {% if request.GET.status == 'Pending' %}selected{% endif %}>Pending</option>
+                        <option value="Flagged" {% if request.GET.status == 'Flagged' %}selected{% endif %}>Flagged</option>
+                        <option value="Rejected" {% if request.GET.status == 'Rejected' %}selected{% endif %}>Rejected</option>
+                        <option value="Published" {% if request.GET.status == 'Published' %}selected{% endif %}>Published</option>
+                    </select>
+                </form>
+            </div>
+        </div>
     <div></div>
 </section>
 <section class="mt-6 flex flex-col gap-4">

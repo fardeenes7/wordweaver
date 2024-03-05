@@ -1,0 +1,32 @@
+<article
+    class="splide__slide overflow-hidden rounded-lg shadow transition hover:shadow-lg bg-white"
+>
+    <a href="{% url 'post_detail' post.slug %}">
+        <img
+            alt="Office"
+            src="/media/{{ post.image }}"
+            class="h-48 w-full object-cover"
+        />
+
+        <div class="p-4 sm:p-4">
+            <div class="flex justify-between items-center">
+                <span
+                    class="bg-gray-800 text-white text-xs font-bold px-3 py-1 rounded-lg"
+                    >{{post.category.name}}</span
+                >
+
+                <time datetime="2022-10-10" class="block text-xs text-gray-500">
+                    {{ post.created_at|date:'d M, Y' }}
+                </time>
+            </div>
+
+            <h3 class="mt-2 text-md font-bold text-gray-900">
+                {{ post.title }}
+            </h3>
+
+            <p class="mt-2 line-clamp-3 text-sm/relaxed text-gray-500">
+                {{post.excerpt}}
+            </p>
+        </div>
+    </a>
+</article>

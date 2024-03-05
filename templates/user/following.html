@@ -1,0 +1,45 @@
+{% extends 'user/_user_base.html' %}{% block user %}
+<!---->
+<div class="">
+    <div class="mt-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="space-y-8 sm:space-y-12">
+            <div
+                class="space-y-5 sm:mx-auto sm:max-w-xl sm:space-y-4 lg:max-w-5xl"
+            >
+                <h2 class="text-3xl font-extrabold tracking-tight sm:text-4xl">
+                    Authors you follow
+                </h2>
+            </div>
+            <ul
+                role="list"
+                class="mx-auto grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:gap-x-6 lg:max-w-5xl lg:gap-x-8 lg:gap-y-12 xl:grid-cols-4"
+            >
+                {% for follow in followings %}
+                <a href="{% url 'author_profile' follow.following %}" class="">
+                    <div
+                        class="py-6 bg-white space-y-4 text-center border rounded-lg hover:shadow-xl transition"
+                    >
+                        <img
+                            class="mx-auto h-20 w-20 rounded-full lg:w-24 lg:h-24"
+                            src="/media/{{follow.following.profile.image}}"
+                            alt=""
+                        />
+                        <div class="space-y-2">
+                            <div class="text-xs font-bold lg:text-sm">
+                                <h3>{{follow.following.profile}}</h3>
+                                <p class="text-indigo-600">
+                                    {{follow.following.post.all.count}} Posts
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                {% endfor %}
+
+                <!-- More people... -->
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

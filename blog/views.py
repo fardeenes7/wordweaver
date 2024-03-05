@@ -22,6 +22,7 @@ def index(request):
     paginator = Paginator(post_list, 5)
     page = request.GET.get('page')
     posts = paginator.get_page(page)
+    
     context = {
         'posts': posts,
     }
@@ -33,13 +34,17 @@ def post_detail(request, slug):
     PostView.objects.create(post=post)
     if request.method == 'POST':
         try:
-            if request.POST.get('body'):
-                Comment.objects.create(
-                    post = post,
-                    user = request.user if request.user.is_authenticated else None,
-                    body = request.POST.get('comment')
-                )
-                messages.success(request, 'Comment submitted successfully.')
+            if request.POST.get('comment'):
+                try:
+                    Comment.objects.create(
+                        post = post,
+                        user = request.user if request.user.is_authenticated else None,
+                        body = request.POST.get('comment')
+                    )
+                    messages.success(request, 'Comment submitted successfully.')
+                except Exception as e:
+                    print(e)
+                    messages.error(request, 'Something went wrong.')
             elif request.POST.get('action') == 'add_bookmark':
                 Bookmark.objects.create(post=post, user=request.user)
                 messages.success(request, 'Bookmark added')
@@ -58,6 +63,17 @@ def post_detail(request, slug):
     return render(request, 'blog/post_detail.html', context)
 
 
+def comment_delete(request, id):
+    comment = Comment.objects.get(id=id)
+    post = comment.post.slug
+    if comment.user == request.user:
+        comment.delete()
+        messages.success(request, 'Comment deleted successfully.')
+    else:
+        messages.error(request, 'Something went wrong.')
+    return redirect('post_detail', slug=comment.post.slug)
+
+
 def category_list(request):
     context = {
         'categories': Category.objects.all()
@@ -74,4 +90,40 @@ def category_detail(request, slug):
     }
     return render(request, 'blog/category/detail.html', context)
 
+import random
+def tag_list(request):
+    # select the tags those name is only 1 or 2 words
+    tags = Tag.objects.annotate(post_count=Count('post')).filter(post_count__gt=0).order_by('name')
+    tag_list = []
+    color_list = ['red', 'orange', 'amber', 'yellow', 'green', 'blue', 'indigo', 'purple']
+    for tag in tags:
+        tag_list.append({
+            'tag': tag,
+            'color': random.choice(color_list)
+        })
+    context = {
+        'tags': tag_list
+    }
+    return render(request, 'blog/tag/list.html', context)
 
+
+def tag_detail(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    context = {
+        'tag': tag,
+        'posts': Post.objects.filter(tags=tag).filter(status='Published'),
+    }
+    return render(request, 'blog/tag/detail.html', context)
+
+
+#paginator
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+def search(request):
+    query = request.GET.get('q').strip() if request.GET.get('q') else ''
+    posts = Post.objects.filter(title__icontains=query).filter(status='Published')
+    context = {
+        'query': query,
+        'posts': posts,
+    }
+
+    return render(request, 'blog/search/search.html', context)

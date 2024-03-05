@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            .body {
+                background-color: #f6f6f6;
+            }
+            .email-content {
+                font-family: Arial, sans-serif;
+                background-color: white;
+                margin: 2rem auto auto auto;
+                max-width: 36rem;
+                padding: 1rem 2rem 2rem 2rem;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                border-radius: 1rem;
+            }
+            .post-title {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .featured-image {
+                margin: 1rem 0;
+                width: 100%;
+                max-height: 10rem;
+                object-fit: cover;
+                object-position: center;
+            }
+            .post-excerpt {
+                margin-top: 20px;
+                color: #c9c9c9;
+            }
+            .read-more-button {
+                margin-top: 20px;
+                background-color: #007bff;
+                color: #ffffff;
+                padding: 10px 20px;
+                text-decoration: none;
+                display: inline-block;
+                font-weight: bold;
+                border-radius: 0.5rem;
+            }
+            .footer {
+                margin-top: 20px;
+                border-top: 1px solid #c9c9c9;
+                padding-top: 0px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body class="body">
+        <div class="email-content">
+            <h1 style="text-align: center">wordweaver</h1>
+            <p>{{message}}</p>
+            <h3 class="post-title">{{ title }}</h3>
+            <img
+                class="featured-image"
+                src="{{ image }}"
+                alt="Featured Image"
+            />
+            <div class="post-excerpt">{{ excerpt }}</div>
+            <p>{{note}}</p>
+            <a href="{{ url }}" class="read-more-button">{{action}}</a>
+            <div class="footer">
+                <h3>wordweaver</h3>
+                <p>All Rights reserved &copy 2023</p>
+            </div>
+        </div>
+    </body>
+</html>

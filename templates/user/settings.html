@@ -1,28 +1,193 @@
 {% extends 'user/_user_base.html' %}{% block user %}
 <!---->
-<div class="flex flex-col gap-6">
-    <!-- Account Deletion -->
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="flex flex-col gap-4">
     <div class="bg-white shadow sm:rounded-lg">
         <div class="px-4 py-5 sm:p-6">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Delete your account
+            <h3
+                class="text-lg leading-6 font-medium text-gray-900"
+                id="renew-subscription-label"
+            >
+                Newsletter
             </h3>
-            <div class="mt-2 max-w-xl text-sm text-gray-500">
-                <p>
-                    Once you delete your account, you will lose all data
-                    associated with it.
-                </p>
-            </div>
-            <div class="mt-5">
-                <button
-                    type="button"
-                    class="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+            <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                <div class="max-w-xl text-sm text-gray-500">
+                    <p id="renew-subscription-description">
+                        Get list of latest articles and news straight to your
+                        inbox.
+                    </p>
+                </div>
+                <form
+                    id="newsletterform"
+                    action="{% url 'my_newsletter_toggle' %}"
+                    method="POST"
                 >
-                    Delete account
-                </button>
+                    {% csrf_token %}
+                    <div
+                        class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center"
+                    >
+                        <label
+                            for="newsletter"
+                            class="relative h-8 w-14 cursor-pointer [-webkit-tap-highlight-color:_transparent]"
+                        >
+                            <input
+                                type="checkbox"
+                                id="newsletter"
+                                name="newsletter"
+                                class="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
+                                onchange="this.form.submit()"
+                            />
+
+                            <span
+                                class="absolute inset-y-0 start-0 z-10 m-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-gray-400 transition-all peer-checked:start-6 peer-checked:text-green-600"
+                            >
+                                <svg
+                                    data-unchecked-icon
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+
+                                <svg
+                                    data-checked-icon
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="hidden h-4 w-4"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </span>
+
+                            <span
+                                class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"
+                            ></span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white shadow sm:rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <h3
+                class="text-lg leading-6 font-medium text-gray-900"
+                id="renew-subscription-label"
+            >
+                New Post Alert
+            </h3>
+            <div class="mt-2 sm:flex sm:items-start sm:justify-between">
+                <div class="max-w-xl text-sm text-gray-500">
+                    <p id="renew-subscription-description">
+                        Get a notification whenever a new post is published.
+                    </p>
+                </div>
+                <form
+                    id="new_post_alert_form"
+                    action="{% url 'my_new_post_alert_toggle' %}"
+                    method="POST"
+                >
+                    {% csrf_token %}
+                    <div
+                        class="mt-5 sm:mt-0 sm:ml-6 sm:flex-shrink-0 sm:flex sm:items-center"
+                    >
+                        <label
+                            for="new_post_alert"
+                            class="relative h-8 w-14 cursor-pointer [-webkit-tap-highlight-color:_transparent]"
+                        >
+                            <input
+                                type="checkbox"
+                                id="new_post_alert"
+                                name="new_post_alert"
+                                class="peer sr-only [&:checked_+_span_svg[data-checked-icon]]:block [&:checked_+_span_svg[data-unchecked-icon]]:hidden"
+                                onchange="this.form.submit()"
+                            />
+
+                            <span
+                                class="absolute inset-y-0 start-0 z-10 m-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-white text-gray-400 transition-all peer-checked:start-6 peer-checked:text-green-600"
+                            >
+                                <svg
+                                    data-unchecked-icon
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="h-4 w-4"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+
+                                <svg
+                                    data-checked-icon
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="hidden h-4 w-4"
+                                    viewBox="0 0 20 20"
+                                    fill="currentColor"
+                                >
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                                        clip-rule="evenodd"
+                                    />
+                                </svg>
+                            </span>
+
+                            <span
+                                class="absolute inset-0 rounded-full bg-gray-300 transition peer-checked:bg-green-500"
+                            ></span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-6">
+        <!-- Account Deletion -->
+        <div class="bg-white shadow sm:rounded-lg">
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                    Delete your account
+                </h3>
+                <div class="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>
+                        Once you delete your account, you will lose all data
+                        associated with it.
+                    </p>
+                </div>
+                <div class="mt-5">
+                    <button
+                        type="button"
+                        class="inline-flex items-center justify-center px-4 py-2 border border-transparent font-medium rounded-md text-red-700 bg-red-100 hover:bg-red-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:text-sm"
+                    >
+                        Delete account
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 </div>
+<script>
+    if ("{{newsletter}}" === "True") {
+        document.getElementById("newsletter").checked = true;
+    }
+    if ("{{new_post_alert}}" === "True") {
+        document.getElementById("new_post_alert").checked = true;
+    }
+</script>
 <!---->
 {% endblock %}

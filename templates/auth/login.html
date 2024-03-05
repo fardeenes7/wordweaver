@@ -112,11 +112,10 @@
             {% endif %}
             <div class="flex items-center justify-between">
                 <p class="text-sm text-gray-500">
-                    No account?
                     <a
                         class="underline hover:font-bold"
-                        href="{% url 'register' %}"
-                        >Sign up</a
+                        href="{% url 'reset_password' %}"
+                        >Reset Password</a
                     >
                 </p>
 
@@ -126,6 +125,16 @@
                 >
                     Sign in
                 </button>
+            </div>
+            <div class="flex items-center justify-between">
+                <p class="text-sm text-gray-500">
+                    No account?
+                    <a
+                        class="underline hover:font-bold"
+                        href="{% url 'register' %}"
+                        >Sign up now</a
+                    >
+                </p>
             </div>
         </form>
     </div>
